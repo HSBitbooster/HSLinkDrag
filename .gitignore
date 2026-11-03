@@ -1,0 +1,12 @@
+# Betriebssystem / Editor
+.DS_Store
+Thumbs.db
+*~
+*.swp
+.vscode/
+.idea/
+
+# Gepackte Erweiterung für den Web Store
+*.zip
+*.crx
+*.pem
