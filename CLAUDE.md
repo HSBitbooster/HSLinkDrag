@@ -6,6 +6,8 @@ in neuem Tab öffnen; Zugrichtung bestimmt Vorder-/Hintergrund.
 - Konzept, Entscheidungsprotokoll und aktueller Status: [docs/KONZEPT.md](docs/KONZEPT.md)
 - Manuelle Test-Checkliste: [docs/TESTPLAN.md](docs/TESTPLAN.md)
 - Installation, Bedienung, Projektstruktur: [README.md](README.md)
+- Chrome Web Store: Texte [store/STORE-EINTRAG.md](store/STORE-EINTRAG.md), Paket `scripts/build-zip.sh`,
+  Bilder `scripts/store-images.sh`. Bei neuen Funktionen Store-Texte und Bilder mitpflegen.
 - Kommunikation mit dem Nutzer auf Deutsch.
 - Git: Branch `main`, Remote `origin` = https://github.com/HSBitbooster/HSLinkDrag (privat).
   Nach jedem fertigen, getesteten Schritt committen und pushen.

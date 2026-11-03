@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Optionsseite für Store-Screenshot</title>
+  <script>
+    // Lädt die echte Optionsseite mit nachgebildeten Chrome-APIs (nur für den Screenshot).
+    // Braucht beim Rendern --allow-file-access-from-files (fetch auf file://).
+    (async () => {
+      const lang = new URLSearchParams(location.search).get('lang') === 'en' ? 'en' : 'de';
+      const messages = await fetch(`../../_locales/${lang}/messages.json`).then((r) => r.json());
+      const store = { excludedDomains: ['trello.com'] };
+      window.chrome = {
+        storage: { sync: { get: async (d) => ({ ...d, ...store }), set: async () => {} }, onChanged: { addListener() {} } },
+        i18n: { getMessage: (k) => (messages[k] ? messages[k].message : ''), getUILanguage: () => lang }
+      };
+      const html = await fetch('../../options/options.html').then((r) => r.text());
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const base = document.createElement('base');
+      base.href = new URL('../../options/', location.href).href;
+      document.head.prepend(base);
+      document.head.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="options.css">');
+      document.body.innerHTML = doc.body.innerHTML.replace(/<script[\s\S]*?<\/script>/g, '');
+      for (const src of ['../src/shared/settings.js', 'options.js']) {
+        new Function(await fetch(new URL(src, base.href)).then((r) => r.text()))();
+      }
+      document.body.style.paddingTop = '14px';
+      document.body.style.zoom = '0.8';  // mehr Optionen im Bild
+    })();
+  </script>
+</head>
+<body></body>
+</html>

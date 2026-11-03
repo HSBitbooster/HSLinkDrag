@@ -44,6 +44,8 @@ viewer/                  Anzeigeseite für per Drag geöffnete SVG-Grafiken
 _locales/de, _locales/en Texte Deutsch/Englisch
 icons/                   Icons (logo-original.png ist die Quelle)
 test/                    Unit-Tests und manuelle Testseite
+scripts/                 ZIP-Paket und Store-Bilder erzeugen
+store/                   Chrome-Web-Store-Texte, Datenschutzerklärung, Bilder
 docs/KONZEPT.md          Konzept, Entscheidungen, Status
 docs/TESTPLAN.md         Manuelle Test-Checkliste
 ```
@@ -68,5 +70,28 @@ Danach im Browser `http://localhost:8765/test/testseite.html` aufrufen.
 ## Icons neu erzeugen
 
 ```bash
-cd icons && for s in 16 32 48 128; do convert logo-original.png -filter Lanczos -resize ${s}x${s} icon-$s.png; convert logo-original.png -filter Lanczos -resize ${s}x${s} -colorspace Gray -channel A -evaluate multiply 0.6 +channel icon-$s-off.png; done
+cd icons && for s in 16 32 48; do convert logo-original.png -filter Lanczos -resize ${s}x${s} icon-$s.png; convert logo-original.png -filter Lanczos -resize ${s}x${s} -colorspace Gray -channel A -evaluate multiply 0.6 +channel icon-$s-off.png; done
 ```
+
+```bash
+cd icons && convert logo-original.png -filter Lanczos -resize 96x96 -background none -gravity center -extent 128x128 icon-128.png
+```
+
+Das 128er-Icon hat nach den Store-Richtlinien 16 px transparenten Rand (Grafik 96 × 96).
+
+## Chrome Web Store
+
+ZIP-Paket bauen (führt vorher die Unit-Tests aus) → `dist/HSLinkDrag-<version>.zip`:
+
+```bash
+scripts/build-zip.sh
+```
+
+Store-Bilder neu erzeugen (headless Chrome) → `store/images/`:
+
+```bash
+scripts/store-images.sh
+```
+
+Alle Texte zum Kopieren ins Entwickler-Dashboard: `store/STORE-EINTRAG.md`,
+Datenschutzerklärung: `store/DATENSCHUTZ.md`.
