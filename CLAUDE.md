@@ -7,6 +7,8 @@ in neuem Tab öffnen; Zugrichtung bestimmt Vorder-/Hintergrund.
 - Manuelle Test-Checkliste: [docs/TESTPLAN.md](docs/TESTPLAN.md)
 - Installation, Bedienung, Projektstruktur: [README.md](README.md)
 - Kommunikation mit dem Nutzer auf Deutsch.
+- Git: Branch `main`, Remote `origin` = https://github.com/HSBitbooster/HSLinkDrag (privat).
+  Nach jedem fertigen, getesteten Schritt committen und pushen.
 
 ## Arbeitsregeln
 
