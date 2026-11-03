@@ -147,7 +147,12 @@ No, I am not using remote code.
 
 ### Datenschutzerklärung (Privacy policy URL)
 
-Öffentliche Adresse der Datei `store/DATENSCHUTZ.md` (siehe Anleitung).
+```
+https://github.com/HSBitbooster/HSLinkDrag-Datenschutz/blob/main/README.md
+```
+
+Öffentliches Repository `HSBitbooster/HSLinkDrag-Datenschutz`, enthält nur `store/DATENSCHUTZ.md`
+als `README.md`. Bei Änderungen an `store/DATENSCHUTZ.md` dort ebenfalls aktualisieren.
 
 ---
 

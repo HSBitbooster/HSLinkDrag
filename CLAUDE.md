@@ -8,6 +8,9 @@ in neuem Tab öffnen; Zugrichtung bestimmt Vorder-/Hintergrund.
 - Installation, Bedienung, Projektstruktur: [README.md](README.md)
 - Chrome Web Store: Texte [store/STORE-EINTRAG.md](store/STORE-EINTRAG.md), Paket `scripts/build-zip.sh`,
   Bilder `scripts/store-images.sh`. Bei neuen Funktionen Store-Texte und Bilder mitpflegen.
+- Datenschutzerklärung öffentlich: https://github.com/HSBitbooster/HSLinkDrag-Datenschutz
+  (öffentliches Repo, nur README.md = `store/DATENSCHUTZ.md`; Commits dort mit der
+  GitHub-noreply-Adresse, nicht mit der Gmail-Adresse). Bei Änderungen beide aktualisieren.
 - Kommunikation mit dem Nutzer auf Deutsch.
 - Git: Branch `main`, Remote `origin` = https://github.com/HSBitbooster/HSLinkDrag (privat).
   Nach jedem fertigen, getesteten Schritt committen und pushen.
