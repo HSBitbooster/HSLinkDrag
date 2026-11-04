@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | **Chrome Web Store:** 1.0.3 zur Prüfung eingereicht (2026-11-04), Ergebnis ausstehend. **GitHub:** Version 1.0.4 (Abgleich mit der Firefox-Version), automatisch geprüft; manueller Test ausstehend. 1.0.4 wird erst nach Freigabe von 1.0.3 als Update eingereicht (siehe store/STORE-EINTRAG.md) |
+| **Status** | **Chrome Web Store:** 1.0.3 zur Prüfung eingereicht (2026-11-04), Ergebnis ausstehend. **GitHub: Version 1.0.4 – fertig und getestet** (gleicher Stand wie Firefox 1.0.4, Tag `v1.0.4`). 1.0.4 wird nach Freigabe von 1.0.3 als Update eingereicht (store/STORE-EINTRAG.md, Abschnitt „Update auf 1.0.4“) |
 | **Stand** | 2026-11-04 |
 | **Name** | HSLinkDrag |
 | **Plattform** | Google Chrome, aktuelle Version (Manifest V3). Entwicklung unter Linux. Schwesterprojekt für Firefox: `../../FIREFOX_AddOns/HSLinkDrag` (github.com/HSBitbooster/HSLinkDrag-Firefox) |
@@ -385,6 +385,7 @@ Alle Fragen am 2026-11-03 wie vorgeschlagen entschieden. Aktuell keine offenen F
 | 2026-11-04 | Firefox-Umsetzung in `../../FIREFOX_AddOns/HSLinkDrag` (github.com/HSBitbooster/HSLinkDrag-Firefox). Dieses Repository heißt jetzt `HSBitbooster/HSLinkDrag-Chrome`. |
 | 2026-11-04 | Abgleich mit Firefox, beide als **1.0.4**: Rückfallweg, wenn die Seite das Ziehen abbricht (Googles Reiter), mit Karussell-Schutz; Markierter Text zählt nur bei Druck in der Markierung; Zieh-Bild des Browsers wird bei eingeschaltetem Hinweis ausgeblendet (`setDragImage`, in beiden Browsern). Die Live-Sprachumschaltung der Firefox-Version entfällt, weil Chrome die Sprache nur mit Neustart wechselt. Testseite/Testserver (ohne Cache, `scripts/serve.js`) wie bei Firefox. Logik-Test in headless Chrome mit simulierten APIs 6/6. |
 | 2026-11-04 | Versionsregel: Chrome und Firefox immer gleiche Version und gleicher Stand. `scripts/check-version.js` bricht den Paketbau ab, wenn die Versionen abweichen; Git-Tag `v<version>` in beiden Repositorys. Chrome Web Store: 1.0.4 erst nach Freigabe von 1.0.3 einreichen. |
+| 2026-11-04 | Manueller Test 1.0.4 (Runde 5): T35–T39 bestanden. Tag `v1.0.4` in beiden Repositorys. |
 
 ## 10. Umsetzungsplan (Schritte 1–8 für Version 1.0.0 erledigt)
 

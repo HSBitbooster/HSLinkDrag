@@ -67,11 +67,11 @@ Diese Teile laufen im Service-Worker bzw. hängen vom echten Browser/Betriebssys
 | T32 | Echte Seiten mit SVG-Symbolen (z. B. GitHub, Wikipedia-Diagramme) | Grafik öffnet sinnvoll; Klicks auf Knöpfe/Symbole funktionieren unverändert | ✅ |
 | T33 | In beiden Frames (gleicher und fremder Ursprung): SVG, SVG im Link, SVG-Link – innerhalb und über den Rand hinaus, ohne/mit SHIFT | Öffnet wie auf der Seite; Richtung stimmt; SHIFT schaltet „Link“ ↔ „Bild“ | ✅ |
 | T34 | Beim Ziehen aus einem Frame heraus auf den Hinweis achten | Hinweis folgt dem Mauszeiger auch außerhalb des Frames, verschwindet nach dem Loslassen | ✅ |
-| T35 | 1.0.4 – Testseite Abschnitt 5: Link, dessen Ziehen die Seite abbricht, nach rechts und links; Google-Suche: Reiter „Bilder“, „Videos“, „News“ ziehen | Öffnet; Richtung stimmt | ⬜ |
-| T36 | 1.0.4 – Testseite Abschnitt 5: im Karussell an einem Link nach links ziehen; danach einen Karussell-Link anklicken | Band verschiebt sich, HSLinkDrag öffnet nichts; Klick öffnet den Link | ⬜ |
-| T37 | 1.0.4 – Testseite Abschnitt 1: „Zieh-Bild: diesen Link langsam ziehen“; danach ein Bild ohne Link; dann in den Einstellungen „Hinweis beim Ziehen anzeigen“ aus und erneut | Mit Hinweis: kein Kasten mit Linktext/Adresse bzw. keine Bildvorschau am Mauszeiger, nur der Hinweis. Ohne Hinweis: Zieh-Bild von Chrome wie gewohnt | ⬜ |
-| T38 | 1.0.4 – Teil des Linktexts „dieser Linktext ist teilweise markierbar“ markieren, dann am selben Link **außerhalb** der Markierung ziehen; danach **in** der Markierung | außerhalb: Link öffnet · in der Markierung: Suche nach dem markierten Text | ⬜ |
-| T39 | 1.0.4 – Testseite Abschnitt 7: CSP-Testseite, Link ziehen; Abschnitt 8: SVG-Link (Text) in beiden Frames | Hinweis wie gewohnt, Link öffnet; SVG-Textlinks öffnen | ⬜ |
+| T35 | 1.0.4 – Testseite Abschnitt 5: Link, dessen Ziehen die Seite abbricht, nach rechts und links; Google-Suche: Reiter „Bilder“, „Videos“, „News“ ziehen | Öffnet; Richtung stimmt | ✅ (Runde 5) |
+| T36 | 1.0.4 – Testseite Abschnitt 5: im Karussell an einem Link nach links ziehen; danach einen Karussell-Link anklicken | Band verschiebt sich, HSLinkDrag öffnet nichts; Klick öffnet den Link | ✅ (Runde 5) |
+| T37 | 1.0.4 – Testseite Abschnitt 1: „Zieh-Bild: diesen Link langsam ziehen“; danach ein Bild ohne Link; dann in den Einstellungen „Hinweis beim Ziehen anzeigen“ aus und erneut | Mit Hinweis: kein Kasten mit Linktext/Adresse bzw. keine Bildvorschau am Mauszeiger, nur der Hinweis. Ohne Hinweis: Zieh-Bild von Chrome wie gewohnt | ✅ (Runde 5) |
+| T38 | 1.0.4 – Teil des Linktexts „dieser Linktext ist teilweise markierbar“ markieren, dann am selben Link **außerhalb** der Markierung ziehen; danach **in** der Markierung | außerhalb: Link öffnet · in der Markierung: Suche nach dem markierten Text | ✅ (Runde 5) |
+| T39 | 1.0.4 – Testseite Abschnitt 7: CSP-Testseite, Link ziehen; Abschnitt 8: SVG-Link (Text) in beiden Frames | Hinweis wie gewohnt, Link öffnet; SVG-Textlinks öffnen | ✅ (Runde 5) |
 
 ## Ergebnisse Runde 1 (Version 1.0.0, 2026-11-03)
 
@@ -110,6 +110,9 @@ Nutzer bestätigt außerdem alle Grundtests T1–T17, T19–T21 und T24 als best
 
 **Damit sind alle Tests des Testplans bestanden (T26 entfällt).**
 
-## Ergebnisse Runde 5 (Version 1.0.4)
+## Ergebnisse Runde 5 (Version 1.0.4, 2026-11-04)
 
-*Noch offen:* T35–T39, dazu kurz T1, T9, T22 als Gegenprobe.
+✅ T35–T39 bestanden (gesperrte Links inkl. Googles Reiter, Karussell, Zieh-Bild ausgeblendet,
+Markierung im Link, CSP-Seite und SVG-Textlink in den Frames).
+
+**Version 1.0.4: alle Tests bestanden.**
