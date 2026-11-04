@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Version 1.0.3 – fertig und getestet. **Store-Paket vorbereitet** (`store/`, `scripts/`), Veröffentlichung im Chrome Web Store steht aus |
+| **Status** | Version 1.0.3 – fertig und getestet. **Im Chrome Web Store zur Prüfung eingereicht (2026-11-04)**, Ergebnis per E-Mail an den Nutzer ausstehend |
 | **Stand** | 2026-11-03 |
 | **Name** | HSLinkDrag |
 | **Plattform** | Nur Google Chrome, aktuelle Version (Manifest V3); keine anderen Browser. Entwicklung unter Linux |
@@ -361,6 +361,7 @@ Alle Fragen am 2026-11-03 wie vorgeschlagen entschieden. Aktuell keine offenen F
 | 2026-11-03 | Nutzertest 1.0.2: T25, T27, T28, T30–T32 ok. Hinweis bleibt am Frame-Rand hängen; T29 (SVG im HTML-Link) ohne SHIFT-Erkennung. → 1.0.3: laufende Maus-Geste hat Vorrang vor dem nativen Link-Drag; Hinweis wird außerhalb des Frames vom übergeordneten Frame gezeichnet. Test-Frames enthalten jetzt auch SVG, SVG im Link und SVG-Link. |
 | 2026-11-03 | Nutzertest 1.0.3: T29, T33, T34 bestanden; Grundtests T1–T17, T19–T21, T24 ebenfalls bestanden. Version 1.0.3 abgeschlossen. |
 | 2026-11-04 | Chrome-Web-Store-Paket vorbereitet: `scripts/build-zip.sh` (ZIP nur mit Laufzeitdateien), Store-Icon 128 px mit 16 px Rand (Store-Richtlinie, gilt auch im Manifest), Texte und Berechtigungsbegründungen de/en (`store/STORE-EINTRAG.md`), Datenschutzerklärung (`store/DATENSCHUTZ.md`), Screenshots 1280 × 800 und Werbekachel 440 × 280 de/en aus `store/scenes/` per `scripts/store-images.sh`. |
+| 2026-11-04 | Version 1.0.3 im Chrome Web Store zur Prüfung eingereicht. Datenschutzerklärung öffentlich unter github.com/HSBitbooster/HSLinkDrag-Datenschutz. Dashboard-Hinweis „Erweiterte Hostberechtigungen“ bestätigt mit „Prüfen lassen“: `activeTab` oder feste Websites passen nicht, weil die Geste auf jeder Seite ohne vorherigen Klick bereitstehen muss. |
 
 ## 10. Umsetzungsplan (Schritte 1–8 für Version 1.0.0 erledigt)
 
