@@ -25,4 +25,9 @@ in neuem Tab öffnen; Zugrichtung bestimmt Vorder-/Hintergrund.
   Content-Scripts keine ES-Module laden können; zusätzlich `module.exports` für Node-Tests.
 - Neue Texte immer in beiden Sprachen: `_locales/de` und `_locales/en`.
 - Tests: `node --test test/`. Testseite über `.claude/launch.json` („testseite“, Port 8765)
-  → `http://localhost:8765/test/testseite.html`.
+  bzw. `node scripts/serve.js` (ohne Cache) → `http://localhost:8765/test/testseite.html`.
+- **Chrome und Firefox immer gleiche Version und gleicher Funktionsstand.** Firefox-Projekt:
+  `../../FIREFOX_AddOns/HSLinkDrag` (github.com/HSBitbooster/HSLinkDrag-Firefox). Jede
+  Funktionsänderung in beiden Projekten umsetzen und testen; Version in beiden gleichzeitig
+  erhöhen; `scripts/check-version.js` (läuft in `scripts/build-zip.sh`) muss grün sein;
+  Git-Tag `v<version>` in beiden Repositorys. Details: `docs/KONZEPT.md` Abschnitt 11.

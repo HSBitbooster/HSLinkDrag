@@ -4,6 +4,9 @@ Chrome-Erweiterung: Links, Bilder und markierten Text per **Click & Drag** in ei
 neuen Tab öffnen. Die Zugrichtung (links/rechts) bestimmt, ob der Tab im Vorder- oder
 Hintergrund geöffnet wird.
 
+Firefox-Version mit gleicher Versionsnummer und gleichem Funktionsstand:
+[HSLinkDrag-Firefox](https://github.com/HSBitbooster/HSLinkDrag-Firefox).
+
 ## Installation (entpackt)
 
 1. In Chrome `chrome://extensions` öffnen.
@@ -44,7 +47,7 @@ viewer/                  Anzeigeseite für per Drag geöffnete SVG-Grafiken
 _locales/de, _locales/en Texte Deutsch/Englisch
 icons/                   Icons (logo-original.png ist die Quelle)
 test/                    Unit-Tests und manuelle Testseite
-scripts/                 ZIP-Paket und Store-Bilder erzeugen
+scripts/                 ZIP-Paket, Store-Bilder, Testserver, Versionsabgleich mit Firefox
 store/                   Chrome-Web-Store-Texte, Datenschutzerklärung, Bilder
 docs/KONZEPT.md          Konzept, Entscheidungen, Status
 docs/TESTPLAN.md         Manuelle Test-Checkliste
@@ -58,11 +61,11 @@ Unit-Tests der Erkennung (Node ≥ 18, keine Abhängigkeiten):
 node --test test/
 ```
 
-Manuelle Tests: `test/testseite.html` über einen lokalen Server öffnen und
-`docs/TESTPLAN.md` abarbeiten:
+Manuelle Tests: `test/testseite.html` über den Testserver öffnen (ohne Cache, damit nach
+Änderungen keine alten Testdateien erscheinen) und `docs/TESTPLAN.md` abarbeiten:
 
 ```bash
-python3 -m http.server 8765 --bind 127.0.0.1
+node scripts/serve.js
 ```
 
 Danach im Browser `http://localhost:8765/test/testseite.html` aufrufen.
@@ -81,7 +84,7 @@ Das 128er-Icon hat nach den Store-Richtlinien 16 px transparenten Rand (Grafik 9
 
 ## Chrome Web Store
 
-ZIP-Paket bauen (führt vorher die Unit-Tests aus) → `dist/HSLinkDrag-<version>.zip`:
+ZIP-Paket bauen (prüft vorher, dass die Firefox-Version dieselbe Versionsnummer hat, und führt die Unit-Tests aus) → `dist/HSLinkDrag-<version>.zip`:
 
 ```bash
 scripts/build-zip.sh

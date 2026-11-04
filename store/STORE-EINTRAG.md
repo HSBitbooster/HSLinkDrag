@@ -10,6 +10,31 @@ Bilder: `store/images/` (neu erzeugen: `scripts/store-images.sh`)
 
 ---
 
+## Update auf 1.0.4 (erst nach Freigabe von 1.0.3)
+
+Während eine Version in Prüfung ist, nimmt das Dashboard kein neues Paket an. Darum:
+
+1. Freigabe-E-Mail für 1.0.3 abwarten (Status im Dashboard: „Veröffentlicht“).
+2. Paket bauen – bricht ab, wenn die Firefox-Version nicht ebenfalls 1.0.4 hat:
+   `scripts/build-zip.sh` → `dist/HSLinkDrag-1.0.4.zip`
+3. Dashboard → HSLinkDrag → **Paket** → „Neues Paket hochladen“ → ZIP auswählen.
+4. **Store-Eintrag:** Texte und Bilder bleiben gültig, keine Änderung nötig.
+5. **Datenschutz:** Berechtigungen unverändert (`storage`, `search`, Content-Script auf allen
+   Websites) – Begründungen, Datennutzung und Datenschutzerklärung bleiben.
+6. „Zur Überprüfung einreichen“. Nach der Freigabe Status in `docs/KONZEPT.md` nachtragen.
+
+Was 1.0.4 ändert (zur eigenen Übersicht, der Chrome Web Store hat kein Feld für Versionshinweise):
+
+- Links, deren Ziehen die Website selbst sperrt (z. B. Googles Reiter „Bilder“, „Videos“),
+  lassen sich jetzt ebenfalls öffnen; Karussells und Schieberegler mit eigenem Ziehen bleiben
+  unberührt.
+- Der Kasten mit Linktext und Adresse, den Chrome beim Ziehen zeigt, verdeckt den Hinweis
+  nicht mehr (wird bei eingeschaltetem Hinweis ausgeblendet).
+- Ist Text markiert und man zieht an einem Link außerhalb der Markierung, öffnet der Link.
+- Gleicher Stand wie HSLinkDrag 1.0.4 für Firefox.
+
+---
+
 ## Tab „Paket“ (Package)
 
 ZIP-Datei `dist/HSLinkDrag-<version>.zip` hochladen.

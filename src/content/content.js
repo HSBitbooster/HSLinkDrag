@@ -17,6 +17,7 @@
   const { settings: S, detect: D } = globalThis.HSLD;
 
   const MOUSE_START_THRESHOLD = 5;   // px, ab hier wird aus einem Klick eine Geste
+  const PAGE_MOVE_TOLERANCE = 3;     // px, so weit darf die Seite ein gezogenes Element verschieben
   const OVERLAY_LEAVE_DELAY = 60;    // ms, Hinweis ausblenden, wenn der Drag den Frame verlässt
   const MAX_STYLED_SVG_NODES = 5000; // größere SVGs ohne übernommene Seiten-Styles
   const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -35,6 +36,11 @@
   let overlay = null;
   let relayed = false;  // Hinweis wird gerade vom übergeordneten Frame gezeichnet
   let leaveTimer = 0;
+
+  // Durchsichtiges 1×1-Bild: ersetzt beim Ziehen von Links und Bildern das Zieh-Bild des Browsers
+  // (Chrome: Kasten mit Linktext und Adresse), das sonst den Hinweis am Mauszeiger überdeckt.
+  const EMPTY_DRAG_IMAGE = new Image(1, 1);
+  EMPTY_DRAG_IMAGE.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
   S.load().then((s) => { settings = s; }).catch(() => {});
   chrome.storage.onChanged.addListener((changes, area) => {
@@ -162,21 +168,39 @@
     const source = path[0];
     if (isEditable(source)) return null;
 
+    // Markierter Text zählt nur, wenn die Maustaste in der Markierung gedrückt wurde – sonst gilt
+    // das Element (z. B. der Link), auch wenn anderswo oder im selben Link Text markiert ist.
     const selection = window.getSelection();
     const selectedText = selection ? selection.toString() : '';
-    const types = e.dataTransfer ? Array.from(e.dataTransfer.types) : [];
-    const isSelectionDrag = selectedText.trim() !== '' &&
-      (source.nodeType === Node.TEXT_NODE || !types.includes('text/uri-list'));
-    if (isSelectionDrag) {
-      const result = D.classifyText(selectedText);
-      if (!result) return null;
-      if (result.type === 'email') return { kind: 'mail', url: result.url };
-      if (result.type === 'url') return { kind: 'address', url: result.url };
-      return { kind: 'search', query: result.query };
-    }
+    const hasSelection = selectedText.trim() !== '';
+    const inSelection = lastMouseDown
+      ? pointInSelection(selection, lastMouseDown.x, lastMouseDown.y)
+      : source.nodeType === Node.TEXT_NODE;
+    if (hasSelection && inSelection) return selectionTarget(selectedText);
 
     if (isPageDraggable(path)) return null;
-    return elementTarget(path);
+    const target = elementTarget(path);
+    if (target) return target;
+    // Markierung, deren Ziehen knapp neben dem markierten Text (z. B. Zeilenzwischenraum) begann.
+    const types = e.dataTransfer ? Array.from(e.dataTransfer.types) : [];
+    return hasSelection && !types.includes('text/uri-list') ? selectionTarget(selectedText) : null;
+  }
+
+  function selectionTarget(selectedText) {
+    const result = D.classifyText(selectedText);
+    if (!result) return null;
+    if (result.type === 'email') return { kind: 'mail', url: result.url, fromSelection: true };
+    if (result.type === 'url') return { kind: 'address', url: result.url, fromSelection: true };
+    return { kind: 'search', query: result.query, fromSelection: true };
+  }
+
+  function pointInSelection(selection, x, y) {
+    for (let i = 0; i < selection.rangeCount; i++) {
+      for (const r of selection.getRangeAt(i).getClientRects()) {
+        if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return true;
+      }
+    }
+    return false;
   }
 
   // SVG-Grafiken sind nicht nativ ziehbar: Geste beginnt beim Drücken der Maustaste.
@@ -391,12 +415,24 @@
       startMouse(target, start.x, start.y, true);
       return;
     }
-    drag = { target, startX: e.clientX };
+    drag = { target, startX: e.clientX, source: asElement(e.composedPath()[0]) };
+    // Nur mit eingeschaltetem Hinweis; markierter Text behält sein Zieh-Bild (überdeckt nichts).
+    if (settings.showOverlay && !target.fromSelection && e.dataTransfer) {
+      try {
+        e.dataTransfer.setDragImage(EMPTY_DRAG_IMAGE, 0, 0);
+      } catch (err) { /* Zieh-Bild des Browsers bleibt */ }
+    }
   }, true);
 
-  // Hat die Seite das Ziehen selbst abgebrochen, gibt es keine Geste.
+  // Hat die Seite das Ziehen selbst abgebrochen (z. B. Google bei den Reitern „Bilder“, „Videos“),
+  // startet kein Drag – die Geste geht dann als Maus-Geste weiter. Bewegt die Seite das Element
+  // dabei selbst (eigenes Ziehen, z. B. Karussell), wird sie abgebrochen (pageMoved).
   window.addEventListener('dragstart', (e) => {
-    if (e.defaultPrevented) drag = null;
+    if (!e.defaultPrevented || !drag) return;
+    const { target, source } = drag;
+    drag = null;
+    const start = lastMouseDown || { x: e.clientX, y: e.clientY };
+    startMouse(target, start.x, start.y, true, source);
   }, false);
 
   function onDragOver(e) {
@@ -438,8 +474,21 @@
 
   // ---------- Maus-Gesten ----------
 
-  function startMouse(target, x, y, active) {
-    mouse = { target, startX: x, startY: y, active, lastX: x, lastY: y, shift: false };
+  // watch: Element, dessen Position überwacht wird – verschiebt die Seite es während der Geste,
+  // zieht sie selbst (Karussell, Schieberegler), und HSLinkDrag hält sich raus.
+  function startMouse(target, x, y, active, watch = null) {
+    mouse = { target, startX: x, startY: y, active, lastX: x, lastY: y, shift: false, watch: null };
+    if (watch && watch.isConnected) {
+      const r = watch.getBoundingClientRect();
+      mouse.watch = { el: watch, left: r.left, top: r.top };
+    }
+  }
+
+  function pageMoved(gesture) {
+    const w = gesture.watch;
+    if (!w || !w.el.isConnected) return false;
+    const r = w.el.getBoundingClientRect();
+    return Math.abs(r.left - w.left) > PAGE_MOVE_TOLERANCE || Math.abs(r.top - w.top) > PAGE_MOVE_TOLERANCE;
   }
 
   function cancelMouse() {
@@ -490,6 +539,10 @@
       cancelMouse();
       return;
     }
+    if (pageMoved(mouse)) {
+      cancelMouse();
+      return;
+    }
     mouse.lastX = e.clientX;
     mouse.lastY = e.clientY;
     mouse.shift = e.shiftKey;
@@ -505,7 +558,7 @@
     const gesture = mouse;
     mouse = null;
     hideOverlay();
-    if (!gesture.active) return;
+    if (!gesture.active || pageMoved(gesture)) return;
     suppressNextClick();
     if (releasedOutsideWindow(e)) return;
     finish(gesture.target, e.clientX - gesture.startX, e.shiftKey);

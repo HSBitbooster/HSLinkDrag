@@ -8,7 +8,8 @@ cd "$(dirname "$0")/.."
 version=$(node -p "require('./manifest.json').version")
 out="dist/HSLinkDrag-${version}.zip"
 
-# Unit-Tests müssen grün sein, bevor ein Paket entsteht.
+# Chrome- und Firefox-Version müssen gleich sein, Unit-Tests grün, bevor ein Paket entsteht.
+node scripts/check-version.js
 node --test test/ > /dev/null
 
 mkdir -p dist

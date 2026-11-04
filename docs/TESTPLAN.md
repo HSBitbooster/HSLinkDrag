@@ -1,7 +1,8 @@
 # HSLinkDrag – Testplan
 
 Manuelle Prüfung in echtem Chrome mit entpackt geladener Erweiterung.
-Testseite: `test/testseite.html` (über `python3 -m http.server 8765 --bind 127.0.0.1`).
+Testseite: `test/testseite.html` über den Testserver ohne Cache (`node scripts/serve.js` →
+`http://localhost:8765/test/testseite.html`), dazu `test/frame.html` und `test/csp.html`.
 
 Legende: ✅ bestanden · ❌ Fehler · ⬜ offen · 🤖 automatisiert geprüft (Chrome-APIs simuliert)
 
@@ -16,6 +17,15 @@ Legende: ✅ bestanden · ❌ Fehler · ⬜ offen · 🤖 automatisiert geprüft
 - 🤖 Ein echter nativer Drag (per Maussteuerung) auf einem Link löste das Öffnen aus.
 - 🤖 Optionsseite: Darstellung (hell/dunkel), Speichern, Bereinigung Ausschlussliste,
   Begrenzung Mindestdistanz.
+
+## Automatisch geprüft für 1.0.4 (2026-11-04)
+
+- 🤖 Unit-Tests `node --test test/` (10/10), Versionsabgleich `node scripts/check-version.js` (1.0.4 = Firefox).
+- 🤖 Content-Script in headless Chrome mit simulierten Chrome-APIs (6/6): normaler Link öffnet und
+  ersetzt das Zieh-Bild; Seite bricht das Ziehen ab → öffnet trotzdem; Karussell mit eigenem Ziehen →
+  nichts, Band verschoben; Teil des Linktexts markiert, außerhalb gezogen → Link; in der Markierung
+  gezogen → Suche, Zieh-Bild des Browsers bleibt; Hinweis aus → Zieh-Bild des Browsers bleibt.
+- Wie es **aussieht** (Zieh-Bild weg) und echte Seiten (Google) nur manuell: T35–T38 unten.
 
 ## Nur im echten Chrome prüfbar
 
@@ -57,6 +67,11 @@ Diese Teile laufen im Service-Worker bzw. hängen vom echten Browser/Betriebssys
 | T32 | Echte Seiten mit SVG-Symbolen (z. B. GitHub, Wikipedia-Diagramme) | Grafik öffnet sinnvoll; Klicks auf Knöpfe/Symbole funktionieren unverändert | ✅ |
 | T33 | In beiden Frames (gleicher und fremder Ursprung): SVG, SVG im Link, SVG-Link – innerhalb und über den Rand hinaus, ohne/mit SHIFT | Öffnet wie auf der Seite; Richtung stimmt; SHIFT schaltet „Link“ ↔ „Bild“ | ✅ |
 | T34 | Beim Ziehen aus einem Frame heraus auf den Hinweis achten | Hinweis folgt dem Mauszeiger auch außerhalb des Frames, verschwindet nach dem Loslassen | ✅ |
+| T35 | 1.0.4 – Testseite Abschnitt 5: Link, dessen Ziehen die Seite abbricht, nach rechts und links; Google-Suche: Reiter „Bilder“, „Videos“, „News“ ziehen | Öffnet; Richtung stimmt | ⬜ |
+| T36 | 1.0.4 – Testseite Abschnitt 5: im Karussell an einem Link nach links ziehen; danach einen Karussell-Link anklicken | Band verschiebt sich, HSLinkDrag öffnet nichts; Klick öffnet den Link | ⬜ |
+| T37 | 1.0.4 – Testseite Abschnitt 1: „Zieh-Bild: diesen Link langsam ziehen“; danach ein Bild ohne Link; dann in den Einstellungen „Hinweis beim Ziehen anzeigen“ aus und erneut | Mit Hinweis: kein Kasten mit Linktext/Adresse bzw. keine Bildvorschau am Mauszeiger, nur der Hinweis. Ohne Hinweis: Zieh-Bild von Chrome wie gewohnt | ⬜ |
+| T38 | 1.0.4 – Teil des Linktexts „dieser Linktext ist teilweise markierbar“ markieren, dann am selben Link **außerhalb** der Markierung ziehen; danach **in** der Markierung | außerhalb: Link öffnet · in der Markierung: Suche nach dem markierten Text | ⬜ |
+| T39 | 1.0.4 – Testseite Abschnitt 7: CSP-Testseite, Link ziehen; Abschnitt 8: SVG-Link (Text) in beiden Frames | Hinweis wie gewohnt, Link öffnet; SVG-Textlinks öffnen | ⬜ |
 
 ## Ergebnisse Runde 1 (Version 1.0.0, 2026-11-03)
 
@@ -94,3 +109,7 @@ Diese Teile laufen im Service-Worker bzw. hängen vom echten Browser/Betriebssys
 Nutzer bestätigt außerdem alle Grundtests T1–T17, T19–T21 und T24 als bestanden.
 
 **Damit sind alle Tests des Testplans bestanden (T26 entfällt).**
+
+## Ergebnisse Runde 5 (Version 1.0.4)
+
+*Noch offen:* T35–T39, dazu kurz T1, T9, T22 als Gegenprobe.

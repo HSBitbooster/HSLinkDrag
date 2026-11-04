@@ -2,10 +2,11 @@
 
 | | |
 |---|---|
-| **Status** | Version 1.0.3 – fertig und getestet. **Im Chrome Web Store zur Prüfung eingereicht (2026-11-04)**, Ergebnis per E-Mail an den Nutzer ausstehend |
-| **Stand** | 2026-11-03 |
+| **Status** | **Chrome Web Store:** 1.0.3 zur Prüfung eingereicht (2026-11-04), Ergebnis ausstehend. **GitHub:** Version 1.0.4 (Abgleich mit der Firefox-Version), automatisch geprüft; manueller Test ausstehend. 1.0.4 wird erst nach Freigabe von 1.0.3 als Update eingereicht (siehe store/STORE-EINTRAG.md) |
+| **Stand** | 2026-11-04 |
 | **Name** | HSLinkDrag |
-| **Plattform** | Nur Google Chrome, aktuelle Version (Manifest V3); keine anderen Browser. Entwicklung unter Linux |
+| **Plattform** | Google Chrome, aktuelle Version (Manifest V3). Entwicklung unter Linux. Schwesterprojekt für Firefox: `../../FIREFOX_AddOns/HSLinkDrag` (github.com/HSBitbooster/HSLinkDrag-Firefox) |
+| **Versionen** | Chrome- und Firefox-Version haben **immer dieselbe Versionsnummer und denselben Funktionsstand** (Abschnitt 11) |
 | **Logo** | `icons/logo-original.png` (295 × 295 px, vom Nutzer geliefert) – daraus werden die Icon-Größen 16/32/48/128 erzeugt |
 
 ---
@@ -94,6 +95,12 @@ Ziehen von Links in die Lesezeichenleiste oder andere Programme möglich.
 Nach einer Maus-Geste wird der folgende `click` unterdrückt, damit der Link nicht
 zusätzlich im aktuellen Tab öffnet.
 
+**Seite bricht den nativen Drag ab** (seit 1.0.4): Bricht die Seite das Ziehen eines Links
+oder Bildes selbst ab (`dragstart` mit `preventDefault`, z. B. Googles Reiter „Bilder“,
+„Videos“), geht die Geste als Maus-Geste weiter. Schutz für Seiten mit eigenem Ziehen
+(Karussell, Schieberegler, sortierbare Listen): Verschiebt die Seite das gezogene Element
+um mehr als 3 px, bricht HSLinkDrag die Geste ab und öffnet nichts.
+
 Startet Chrome nach dem `mousedown` auf einer SVG-Grafik trotzdem einen nativen Drag
 (SVG in einem HTML-Link: Chrome meldet den Link als Startpunkt, nicht die Grafik), wird
 dieser abgebrochen und die bereits laufende Maus-Geste behält Vorrang (seit 1.0.3).
@@ -114,12 +121,19 @@ Datenmodell ist dafür erweiterbar). Ist `|dx|` kleiner als die Mindestdistanz
 Loslassen passiert (z. B. „→ Vordergrund“, „← Hintergrund“, „✉ E-Mail“, „—“ unter
 Mindestdistanz). Abschaltbar.
 
+**Zieh-Bild des Browsers** (seit 1.0.4): Chrome zeigt beim Ziehen eines Links einen Kasten
+mit Linktext und Adresse (bei Bildern eine Vorschau), der den Hinweis überdeckt. Ist der
+Hinweis eingeschaltet, ersetzt HSLinkDrag dieses Zieh-Bild per
+`dataTransfer.setDragImage()` durch ein durchsichtiges 1 × 1-Bild. Bei markiertem Text
+bleibt das Zieh-Bild (überdeckt den Hinweis nicht); bei ausgeschaltetem Hinweis ebenso.
+
 **Ein/Aus & Ausschlussliste:** Die Erweiterung tut nichts, wenn sie über den
 Toolbar-Button global ausgeschaltet ist oder die Domain der Seite in der
 Ausschlussliste steht (Subdomains eingeschlossen).
 
-**Markierung im Link:** Startet der Drag in einer Textmarkierung, gilt der markierte
-Text; sonst gilt der Link.
+**Markierter Text:** Gilt nur, wenn die Maustaste innerhalb der Markierung gedrückt wurde;
+sonst gilt das Element unter dem Mauszeiger (z. B. der Link), auch wenn anderswo oder im
+selben Link Text markiert ist (seit 1.0.4, aus dem Firefox-Test F7 übernommen).
 
 ### 4.2 Zielbestimmung (Prioritätsreihenfolge)
 
@@ -311,7 +325,13 @@ Bestätigung „Gespeichert“.
 - Seiten mit eigener Drag-&-Drop-Logik (z. B. Trello, Google Drive, Kanban-Boards)
   können kollidieren → Ausschlussliste (F10).
 - Seiten, die Ziehen per `draggable="false"` oder `user-drag: none` unterbinden,
-  lösen kein `dragstart` aus → dort funktioniert die Geste nicht.
+  lösen kein `dragstart` aus → dort funktioniert die Geste nicht. Bricht eine Seite den
+  `dragstart` dagegen per Script ab, greift der Rückfallweg (4.1).
+- Seiten mit eigenem Ziehen, die das Element dabei **nicht** verschieben, könnten mit dem
+  Rückfallweg kollidieren → Ausschlussliste. Steht ein Karussell schon am Ende, bewegt es
+  sich nicht mehr, und der Link öffnet (im Firefox-Test T36 vom Nutzer akzeptiert).
+- Mit eingeschaltetem Hinweis fehlt beim Ziehen von Links und Bildern das Zieh-Bild des
+  Browsers – auch beim Ziehen in die Lesezeichenleiste oder andere Programme.
 - `drop` außerhalb des Browserfensters wird nicht ausgewertet.
 - Von der Seite in einen eingebetteten Frame hineinziehen öffnet nichts.
 - Verlinkte Bilder/SVGs und alles in Frames können bei aktiver Erweiterung nicht nativ in andere Programme
@@ -362,6 +382,9 @@ Alle Fragen am 2026-11-03 wie vorgeschlagen entschieden. Aktuell keine offenen F
 | 2026-11-03 | Nutzertest 1.0.3: T29, T33, T34 bestanden; Grundtests T1–T17, T19–T21, T24 ebenfalls bestanden. Version 1.0.3 abgeschlossen. |
 | 2026-11-04 | Chrome-Web-Store-Paket vorbereitet: `scripts/build-zip.sh` (ZIP nur mit Laufzeitdateien), Store-Icon 128 px mit 16 px Rand (Store-Richtlinie, gilt auch im Manifest), Texte und Berechtigungsbegründungen de/en (`store/STORE-EINTRAG.md`), Datenschutzerklärung (`store/DATENSCHUTZ.md`), Screenshots 1280 × 800 und Werbekachel 440 × 280 de/en aus `store/scenes/` per `scripts/store-images.sh`. |
 | 2026-11-04 | Version 1.0.3 im Chrome Web Store zur Prüfung eingereicht. Datenschutzerklärung öffentlich unter github.com/HSBitbooster/HSLinkDrag-Datenschutz. Dashboard-Hinweis „Erweiterte Hostberechtigungen“ bestätigt mit „Prüfen lassen“: `activeTab` oder feste Websites passen nicht, weil die Geste auf jeder Seite ohne vorherigen Klick bereitstehen muss. |
+| 2026-11-04 | Firefox-Umsetzung in `../../FIREFOX_AddOns/HSLinkDrag` (github.com/HSBitbooster/HSLinkDrag-Firefox). Dieses Repository heißt jetzt `HSBitbooster/HSLinkDrag-Chrome`. |
+| 2026-11-04 | Abgleich mit Firefox, beide als **1.0.4**: Rückfallweg, wenn die Seite das Ziehen abbricht (Googles Reiter), mit Karussell-Schutz; Markierter Text zählt nur bei Druck in der Markierung; Zieh-Bild des Browsers wird bei eingeschaltetem Hinweis ausgeblendet (`setDragImage`, in beiden Browsern). Die Live-Sprachumschaltung der Firefox-Version entfällt, weil Chrome die Sprache nur mit Neustart wechselt. Testseite/Testserver (ohne Cache, `scripts/serve.js`) wie bei Firefox. Logik-Test in headless Chrome mit simulierten APIs 6/6. |
+| 2026-11-04 | Versionsregel: Chrome und Firefox immer gleiche Version und gleicher Stand. `scripts/check-version.js` bricht den Paketbau ab, wenn die Versionen abweichen; Git-Tag `v<version>` in beiden Repositorys. Chrome Web Store: 1.0.4 erst nach Freigabe von 1.0.3 einreichen. |
 
 ## 10. Umsetzungsplan (Schritte 1–8 für Version 1.0.0 erledigt)
 
@@ -375,3 +398,16 @@ Alle Fragen am 2026-11-03 wie vorgeschlagen entschieden. Aktuell keine offenen F
 6. Optionsseite mit Erklärtexten.
 7. Zusatzfunktionen gemäß offenen Fragen (Overlay, Ausschlussliste, Toolbar-Schalter, i18n).
 8. Testseite + manueller Testdurchlauf, README mit Installationsanleitung.
+
+## 11. Versionen Chrome ↔ Firefox
+
+- Chrome- und Firefox-Version haben **immer dieselbe Versionsnummer und denselben
+  Funktionsstand** (Vorgabe des Nutzers). Unterschiede nur dort, wo der Browser es verlangt
+  (Firefox: Live-Sprachwechsel, Menüeintrag „Einstellungen“, Website-Zugriff, Tab „Am Ende“ –
+  siehe `docs/KONZEPT.md` Abschnitt 3 im Firefox-Projekt).
+- `scripts/check-version.js` vergleicht beim Paketbau (`scripts/build-zip.sh`) die
+  Versionsnummer mit dem Firefox-Projekt im Nachbarordner und bricht bei Abweichung ab.
+- Jede Version bekommt in **beiden** Repositorys den Git-Tag `v<version>` (z. B. `v1.0.4`).
+- Funktionsänderungen werden immer in beiden Projekten umgesetzt und getestet.
+- Store-Stand kann vorübergehend abweichen (Prüfung im Chrome Web Store dauert); der Stand
+  auf GitHub ist immer gleich.
