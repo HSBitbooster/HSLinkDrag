@@ -95,3 +95,8 @@ scripts/store-images.sh
 
 Alle Texte zum Kopieren ins Entwickler-Dashboard: `store/STORE-EINTRAG.md`,
 Datenschutzerklärung: `store/DATENSCHUTZ.md`.
+
+## Lizenz
+
+MIT – siehe [LICENSE](LICENSE). Nutzung, Änderung und Weitergabe erlaubt, solange der
+Urheberhinweis erhalten bleibt; keine Gewährleistung.
