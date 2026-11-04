@@ -12,7 +12,7 @@ in neuem Tab öffnen; Zugrichtung bestimmt Vorder-/Hintergrund.
   (öffentliches Repo, nur README.md = `store/DATENSCHUTZ.md`; Commits dort mit der
   GitHub-noreply-Adresse, nicht mit der Gmail-Adresse). Bei Änderungen beide aktualisieren.
 - Kommunikation mit dem Nutzer auf Deutsch.
-- Git: Branch `main`, Remote `origin` = https://github.com/HSBitbooster/HSLinkDrag (**öffentlich**
+- Git: Branch `main`, Remote `origin` = https://github.com/HSBitbooster/HSLinkDrag-Chrome (**öffentlich**
   seit 2026-11-04). Nach jedem fertigen, getesteten Schritt committen und pushen. Commits nur mit
   der GitHub-noreply-Adresse (lokal in `.git/config` gesetzt), nie mit der Gmail-Adresse.
 
