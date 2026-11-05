@@ -390,6 +390,7 @@ Alle Fragen am 2026-11-03 wie vorgeschlagen entschieden. Aktuell keine offenen F
 | 2026-11-05 | Chrome Web Store: 1.0.3 freigegeben und veröffentlicht, Eintrag per direktem Link erreichbar. Die Store-Suche findet ihn noch nicht. |
 | 2026-11-05 | Store-Suche findet HSLinkDrag jetzt (Sichtbarkeit öffentlich, alle Regionen). Update auf 1.0.4 im Chrome Web Store eingereicht, Prüfung läuft. |
 | 2026-11-05 | Version 1.0.4 im Chrome Web Store veröffentlicht, auf der öffentlichen Store-Seite geprüft. Öffentliche Kontaktadresse ist jetzt `hslinkdrag@web.de`. |
+| 2026-11-05 | Marquee-Bild 1400 × 560 de/en erstellt (`store/scenes/marquee.html`, `scripts/store-images.sh`) als Vorbereitung für einen späteren Antrag auf das „Empfohlen“-Abzeichen. Antrag erst mit etwas mehr Nutzern und Bewertungen. |
 
 ## 10. Umsetzungsplan (Schritte 1–8 für Version 1.0.0 erledigt)
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Erzeugt die Store-Bilder (Screenshots 1280 × 800, Werbekachel 440 × 280) aus
+# Erzeugt die Store-Bilder (Screenshots 1280 × 800, Werbekachel 440 × 280, Marquee 1400 × 560) aus
 # store/scenes/ mit headless Chrome nach store/images/.
 set -euo pipefail
 
@@ -25,3 +25,5 @@ shot "scene.html?s=3&lang=en" 1280 800 en-3-text.png
 shot "scene.html?s=4&lang=en" 1280 800 en-4-settings.png
 shot "tile.html?lang=de" 440 280 kachel-de.png
 shot "tile.html?lang=en" 440 280 tile-en.png
+shot "marquee.html?lang=de" 1400 560 marquee-de.png
+shot "marquee.html?lang=en" 1400 560 marquee-en.png

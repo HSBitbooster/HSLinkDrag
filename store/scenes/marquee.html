@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>HSLinkDrag – Marquee</title>
+  <link rel="stylesheet" href="scene.css">
+  <style>
+    /* Marquee-Bild 1400 × 560. Aufruf: marquee.html?lang=de|en
+       Links Logo und Name, rechts das angeschnittene Browserfenster aus den Store-Szenen. */
+    html, body { width: 1400px; height: 560px; }
+    body { position: relative; padding: 0; }
+
+    .brand {
+      position: absolute;
+      left: 76px;
+      top: 0;
+      bottom: 0;
+      width: 520px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+    .brand img { width: 150px; height: 150px; }
+    .brand h1 { margin: 6px 0 0; font-size: 72px; font-weight: 800; letter-spacing: -1.5px; }
+    .brand p { margin: 0; max-width: 440px; font-size: 30px; line-height: 1.3; color: #4a5260; }
+
+    .window {
+      position: absolute;
+      left: 650px;
+      top: 62px;
+      width: 860px;
+      height: 560px;
+    }
+    .tab { width: 230px; }
+    .content { height: 472px; padding: 38px 44px; font-size: 22px; line-height: 1.65; }
+    .content p { max-width: 620px; margin: 0 0 22px; }
+    .content h2 { font-size: 32px; margin: 0 0 18px; }
+    .line { height: 15px; margin: 0 0 17px; background: #e8eaed; border-radius: 8px; }
+    .pill { font-size: 19px; padding: 8px 15px; }
+  </style>
+</head>
+<body>
+  <div class="brand">
+    <img src="../../icons/logo-original.png" alt="">
+    <h1>HSLinkDrag</h1>
+    <p id="tagline"></p>
+  </div>
+
+  <div class="window">
+    <div class="tabstrip" id="tabs"></div>
+    <div class="toolbar"><span class="nav">‹ › ↻</span><div class="omnibox" id="url"></div><img class="ext" src="../../icons/icon-32.png" alt=""></div>
+    <div class="content" id="content"></div>
+  </div>
+
+  <script>
+    'use strict';
+    const en = new URLSearchParams(location.search).get('lang') === 'en';
+    const T = en ? {
+      tagline: 'Drag links, images and text into new tabs',
+      site: 'Mountain Trails Blog', tab: 'Reintalanger Hut', badge: 'new', url: 'mountain-trails.example/zugspitze',
+      title: 'Climbing the Zugspitze',
+      p: 'Spend the night at the <a id="target" href="#">Reintalanger Hut</a>.',
+      pill: '→ Foreground · Link'
+    } : {
+      tagline: 'Links, Bilder und Text per Ziehen in neuen Tabs öffnen',
+      site: 'Bergtouren-Blog', tab: 'Reintalangerhütte', badge: 'neu', url: 'bergtouren-blog.example/zugspitze',
+      title: 'Auf die Zugspitze',
+      p: 'Übernachtet wird auf der <a id="target" href="#">Reintalangerhütte</a>.',
+      pill: '→ Vordergrund · Link'
+    };
+
+    document.documentElement.lang = en ? 'en' : 'de';
+    document.getElementById('tagline').textContent = T.tagline;
+    document.getElementById('url').textContent = T.url;
+    const fav = (color) => `<span class="fav" style="background:${color}"></span>`;
+    document.getElementById('tabs').innerHTML =
+      `<div class="tab">${fav('#188038')}<span class="title">${T.site}</span></div>` +
+      `<div class="tab active new">${fav('#1a73e8')}<span class="title">${T.tab}</span><span class="badge">${T.badge}</span></div>`;
+
+    const content = document.getElementById('content');
+    content.innerHTML = `<h2>${T.title}</h2><p>${T.p}</p>
+      <div class="line" style="width:620px"></div><div class="line" style="width:560px"></div>
+      <div class="line" style="width:600px"></div><div class="line" style="width:380px"></div>`;
+
+    // Zugweg, Mauszeiger und Hinweis wie in den Store-Szenen (scene.js)
+    const target = document.getElementById('target');
+    const c = content.getBoundingClientRect();
+    const r = target.getBoundingClientRect();
+    const x0 = r.left + r.width * 0.55 - c.left;
+    const y0 = r.top + r.height / 2 - c.top;
+    const x1 = x0 + 200;
+    const y1 = y0 + 92;
+    target.classList.add('highlight');
+    content.insertAdjacentHTML('beforeend', `
+      <svg class="trail" width="1" height="1"><path d="M${x0} ${y0} Q ${(x0 + x1) / 2 + 50} ${y0 - 30} ${x1} ${y1}"
+        fill="none" stroke="#1a73e8" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round"/>
+        <circle cx="${x0}" cy="${y0}" r="7" fill="#1a73e8"/></svg>
+      <svg class="cursor" style="left:${x1 - 2}px;top:${y1 - 2}px" viewBox="0 0 22 30">
+        <path d="M2 2 L2 24 L8 18 L12 28 L16 26 L12 17 L20 17 Z" fill="#fff" stroke="#000" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      <div class="pill" style="left:${x1 - 180}px;top:${y1 + 38}px">${T.pill}</div>`);
+  </script>
+</body>
+</html>
