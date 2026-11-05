@@ -7,7 +7,11 @@ Hintergrund geöffnet wird.
 Firefox-Version mit gleicher Versionsnummer und gleichem Funktionsstand:
 [HSLinkDrag-Firefox](https://github.com/HSBitbooster/HSLinkDrag-Firefox).
 
-## Installation (entpackt)
+## Installation
+
+Aus dem Chrome Web Store: [HSLinkDrag](https://chromewebstore.google.com/detail/hslinkdrag/pilepemcdicgnpdbilcoiieediljfkne) → „Zu Chrome hinzufügen“.
+
+## Installation (entpackt, zum Entwickeln)
 
 1. In Chrome `chrome://extensions` öffnen.
 2. Oben rechts den **Entwicklermodus** einschalten.

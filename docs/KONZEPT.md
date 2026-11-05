@@ -2,9 +2,10 @@
 
 | | |
 |---|---|
-| **Status** | **Chrome Web Store:** 1.0.3 freigegeben und veröffentlicht (Stand 2026-11-05), Update auf 1.0.4 steht an. **GitHub: Version 1.0.4 – fertig und getestet** (gleicher Stand wie Firefox 1.0.4, Tag `v1.0.4`). 1.0.4 kann jetzt als Update eingereicht werden (store/STORE-EINTRAG.md, Abschnitt „Update auf 1.0.4“) |
+| **Status** | **[Chrome Web Store](https://chromewebstore.google.com/detail/hslinkdrag/pilepemcdicgnpdbilcoiieediljfkne):** 1.0.3 freigegeben und veröffentlicht (Stand 2026-11-05), Update auf 1.0.4 steht an. **GitHub: Version 1.0.4 – fertig und getestet** (gleicher Stand wie Firefox 1.0.4, Tag `v1.0.4`). 1.0.4 kann jetzt als Update eingereicht werden (store/STORE-EINTRAG.md, Abschnitt „Update auf 1.0.4“) |
 | **Stand** | 2026-11-04 |
 | **Name** | HSLinkDrag |
+| **Store-ID** | `pilepemcdicgnpdbilcoiieediljfkne` |
 | **Plattform** | Google Chrome, aktuelle Version (Manifest V3). Entwicklung unter Linux. Schwesterprojekt für Firefox: `../../FIREFOX_AddOns/HSLinkDrag` (github.com/HSBitbooster/HSLinkDrag-Firefox) |
 | **Versionen** | Chrome- und Firefox-Version haben **immer dieselbe Versionsnummer und denselben Funktionsstand** (Abschnitt 11) |
 | **Logo** | `icons/logo-original.png` (295 × 295 px, vom Nutzer geliefert) – daraus werden die Icon-Größen 16/32/48/128 erzeugt |

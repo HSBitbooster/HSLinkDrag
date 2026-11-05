@@ -6,7 +6,7 @@ in neuem Tab öffnen; Zugrichtung bestimmt Vorder-/Hintergrund.
 - Konzept, Entscheidungsprotokoll und aktueller Status: [docs/KONZEPT.md](docs/KONZEPT.md)
 - Manuelle Test-Checkliste: [docs/TESTPLAN.md](docs/TESTPLAN.md)
 - Installation, Bedienung, Projektstruktur: [README.md](README.md)
-- Chrome Web Store: Texte [store/STORE-EINTRAG.md](store/STORE-EINTRAG.md), Paket `scripts/build-zip.sh`,
+- Chrome Web Store: https://chromewebstore.google.com/detail/hslinkdrag/pilepemcdicgnpdbilcoiieediljfkne – Texte [store/STORE-EINTRAG.md](store/STORE-EINTRAG.md), Paket `scripts/build-zip.sh`,
   Bilder `scripts/store-images.sh`. Bei neuen Funktionen Store-Texte und Bilder mitpflegen.
 - Datenschutzerklärung öffentlich: https://github.com/HSBitbooster/HSLinkDrag-Datenschutz
   (öffentliches Repo, nur README.md = `store/DATENSCHUTZ.md`; Commits dort mit der
