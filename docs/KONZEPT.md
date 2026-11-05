@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | **[Chrome Web Store](https://chromewebstore.google.com/detail/hslinkdrag/pilepemcdicgnpdbilcoiieediljfkne):** 1.0.3 freigegeben und veröffentlicht (Stand 2026-11-05), Update auf 1.0.4 steht an. **GitHub: Version 1.0.4 – fertig und getestet** (gleicher Stand wie Firefox 1.0.4, Tag `v1.0.4`). 1.0.4 kann jetzt als Update eingereicht werden (store/STORE-EINTRAG.md, Abschnitt „Update auf 1.0.4“) |
+| **Status** | **[Chrome Web Store](https://chromewebstore.google.com/detail/hslinkdrag/pilepemcdicgnpdbilcoiieediljfkne):** 1.0.3 veröffentlicht, **1.0.4 eingereicht und in Prüfung** (Stand 2026-11-05). **GitHub: Version 1.0.4 – fertig und getestet** (gleicher Stand wie Firefox 1.0.4, Tag `v1.0.4`). Nach der Freigabe ist der Store auf demselben Stand |
 | **Stand** | 2026-11-04 |
 | **Name** | HSLinkDrag |
 | **Store-ID** | `pilepemcdicgnpdbilcoiieediljfkne` |
@@ -388,6 +388,7 @@ Alle Fragen am 2026-11-03 wie vorgeschlagen entschieden. Aktuell keine offenen F
 | 2026-11-04 | Versionsregel: Chrome und Firefox immer gleiche Version und gleicher Stand. `scripts/check-version.js` bricht den Paketbau ab, wenn die Versionen abweichen; Git-Tag `v<version>` in beiden Repositorys. Chrome Web Store: 1.0.4 erst nach Freigabe von 1.0.3 einreichen. |
 | 2026-11-04 | Manueller Test 1.0.4 (Runde 5): T35–T39 bestanden. Tag `v1.0.4` in beiden Repositorys. |
 | 2026-11-05 | Chrome Web Store: 1.0.3 freigegeben und veröffentlicht, Eintrag per direktem Link erreichbar. Die Store-Suche findet ihn noch nicht. |
+| 2026-11-05 | Store-Suche findet HSLinkDrag jetzt (Sichtbarkeit öffentlich, alle Regionen). Update auf 1.0.4 im Chrome Web Store eingereicht, Prüfung läuft. |
 
 ## 10. Umsetzungsplan (Schritte 1–8 für Version 1.0.0 erledigt)
 
