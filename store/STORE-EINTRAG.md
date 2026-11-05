@@ -121,7 +121,7 @@ User interface in English and German.
 | Screenshots 1280 × 800 (DE) | `store/images/de-1-vordergrund.png` … `de-4-einstellungen.png` |
 | Screenshots 1280 × 800 (EN) | `store/images/en-1-foreground.png` … `en-4-settings.png` |
 | Kleine Werbekachel 440 × 280 | `store/images/kachel-de.png` / `store/images/tile-en.png` |
-| Marquee 1400 × 560 | `store/images/marquee-de.png` / `store/images/marquee-en.png` (optional; empfohlen vor einem Antrag auf das „Empfohlen“-Abzeichen) |
+| Marquee 1400 × 560 | `store/images/marquee-en.png` – gilt für **alle Sprachen gemeinsam**, darum die englische Fassung (hinterlegt 2026-11-05). `marquee-de.png` wird nicht gebraucht. Änderung erfordert eine erneute Prüfung |
 
 ### Weitere Felder
 
